@@ -15,7 +15,7 @@ export default function EducationPage() {
             은행 앱 또는 웹사이트에 로그인하는 방법을 단계별로 안내합니다.
           </p>
           <a
-            href="https://www.youtube.com/watch?v=영상링크1"
+            href="https://youtu.be/jV-lr5rRop0?si=UUF3B6rpWJvSWcql"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-blue-600 text-white px-6 py-3 rounded-xl text-lg font-bold hover:bg-blue-700 transition"
@@ -47,7 +47,7 @@ export default function EducationPage() {
             현금 인출, 입금, 공과금 납부 등 ATM과 키오스크 사용법을 영상과 함께 안내합니다.
           </p>
           <a
-            href="https://www.youtube.com/watch?v=영상링크3"
+            href="https://youtu.be/209ZxvWINfE?si=Ep43eOeIjveX3gZZ"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-purple-600 text-white px-6 py-3 rounded-xl text-lg font-bold hover:bg-purple-700 transition"
