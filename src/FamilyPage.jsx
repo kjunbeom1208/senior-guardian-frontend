@@ -56,7 +56,7 @@ export default function FamilyPage() {
           <label className="text-2xl font-bold">가족 전화번호 입력</label>
           <input
             type="text"
-            placeholder="예: +821012345678"
+            placeholder="예: 01012345678"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             className="w-full border-4 border-purple-400 rounded-xl p-5 text-2xl focus:ring-4 focus:ring-purple-300"
