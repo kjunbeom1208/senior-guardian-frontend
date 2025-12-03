@@ -88,7 +88,7 @@ export default function GuardianPage() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="w-full h-44 rounded-2xl border border-sky-200 bg-sky-50/60 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 p-4 text-base md:text-lg outline-none transition-all resize-none"
-              placeholder="예: ○○은행 보안카드 전체 번호를 입력하지 않으면 계좌가 정지됩니다..."
+              placeholder="받은 의심되는 메세지를 입력하시오."
             />
             <button
               onClick={checkMessage}
@@ -144,8 +144,8 @@ export default function GuardianPage() {
                   type="text"
                   placeholder={
                     reportType === "phone"
-                      ? "예: 010-1234-5678"
-                      : "예: 123-456-789012"
+                      ? "예: 01012345678"
+                      : "예: 123456789012"
                   }
                   value={reportValue}
                   onChange={(e) => setReportValue(e.target.value)}

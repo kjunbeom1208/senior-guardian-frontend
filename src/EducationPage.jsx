@@ -39,7 +39,7 @@ export default function CheckRequestPage() {
             🔔 보호자 확인 요청
           </h2>
           <p className="text-gray-600 text-sm">
-            받은 의심되는 메세지를 입력하시오.
+            의심되는 메시지를 입력하면 보호자에게 즉시 전달됩니다.
           </p>
         </div>
 
@@ -47,7 +47,7 @@ export default function CheckRequestPage() {
         <textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="예: 이상한 번호에서 계좌이체를 요구하는데 확인이 필요합니다."
+          placeholder="받은 의심되는 메세지를 입력하시오."
           className="w-full h-40 p-4 bg-white/70 border-2 border-yellow-300 focus:border-yellow-500 rounded-xl text-lg shadow-sm transition-all outline-none"
         />
 
