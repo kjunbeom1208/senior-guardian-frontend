@@ -109,7 +109,7 @@ export default function GuardianPage() {
               메시지 위험도 검사하기
             </button>
 
-          {/*  {result && (
+            {result && (
               <div className="mt-5 rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3 text-base md:text-lg font-medium text-slate-800">
                 <p>{result}</p>
                 {reasonSummary && (
@@ -118,7 +118,7 @@ export default function GuardianPage() {
                   </p>
                 )}
               </div>
-            )} */}
+            )}
 
             <p className="mt-3 text-xs text-slate-500">
               * 검사 결과는 참고용이며, 실제 금융 거래 전에는 반드시 금융기관
