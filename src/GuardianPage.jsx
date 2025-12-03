@@ -1,64 +1,63 @@
 import React, { useState } from "react";
 
 export default function GuardianPage() {
-  const [message, setMessage] = useState(""); // 입력한 메시지
-  const [result, setResult] = useState(""); // 검사 결과
-  const [reportValue, setReportValue] = useState(""); // 신고 값
-  const [reportType, setReportType] = useState("phone"); // 신고 타입
-  const [reportStatus, setReportStatus] = useState(""); // 신고 상태
-  const [reportCount, setReportCount] = useState(null); // 신고 횟수 ← 추가됨
+  const [message, setMessage] = useState("");
+  const [result, setResult] = useState("");
+  const [reasonSummary, setReasonSummary] = useState("");
+  const [reportValue, setReportValue] = useState("");
+  const [reportType, setReportType] = useState("phone");
+  const [reportReason, setReportReason] = useState(""); // ✅ 추가됨
+  const [reportStatus, setReportStatus] = useState("");
+  const [reportCount, setReportCount] = useState(null);
 
-  // ✅ 메시지 검사 (백엔드 로직 그대로 유지)
+  // ✅ 메시지 검사 (백엔드 연동 그대로)
   const checkMessage = async () => {
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/check-message`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message }),
-        }
-      );
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/check-message`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+      });
       const data = await res.json();
 
-      if (data.risk === "위험") {
-        setResult("🚨 위험한 메시지입니다!");
-      } else if (data.risk === "주의") {
-        setResult("⚠️ 주의가 필요한 메시지입니다.");
-      } else {
-        setResult("✅ 안전한 메시지로 보입니다.");
-      }
-    } catch (err) {
-      console.error(err);
+      setResult(
+        data.risk === "위험"
+          ? "🚨 위험한 메시지입니다!"
+          : "✅ 안전한 메시지입니다."
+      );
+      setReasonSummary(data.reason || "");
+    } catch {
       setResult("❌ 검사 오류 발생");
+      setReasonSummary("");
     }
   };
 
-  // ✅ 신고하기 기능 (신고 횟수 count 포함)
+  // ✅ 신고 (백엔드 연동 그대로)
   const submitReport = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/report`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: reportType, value: reportValue }),
+        body: JSON.stringify({
+          type: reportType,
+          value: reportValue,
+          reason: reportReason,
+        }),
       });
 
       const data = await res.json();
-
       setReportStatus(data.message);
-
-      // ⭐ 백엔드가 count 값을 보내준다고 가정
-      if (data.count !== undefined) {
-        setReportCount(data.count);
-      }
-    } catch (err) {
-      console.error(err);
+      setReportCount(data.count ?? null);
+    } catch {
       setReportStatus("❌ 신고 오류 발생");
+      setReportCount(null);
     }
   };
 
+  const isHighRisk = reportCount !== null && reportCount >= 5;
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-sky-100 to-indigo-100 px-4 py-10 flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-sky-100 to-indigo-100 flex items-center justify-center px-4 py-10 relative overflow-hidden">
       {/* 배경 장식 */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -top-24 -left-16 h-64 w-64 bg-sky-300/40 rounded-full blur-3xl" />
@@ -66,7 +65,7 @@ export default function GuardianPage() {
       </div>
 
       <div className="w-full max-w-5xl">
-        {/* 상단 타이틀 */}
+        {/* 헤더 */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-white/80 shadow-sm mb-4">
             <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
@@ -78,12 +77,13 @@ export default function GuardianPage() {
             📡 실시간 사기 필터링
           </h2>
           <p className="text-slate-600 text-sm md:text-base">
-            문자·메신저로 받은 내용을 붙여넣어 사기 위험도를 확인해 보세요.
+            의심되는 문자·카카오톡 내용을 분석하고, 사기 번호/계좌를 함께 신고해 보세요.
           </p>
         </div>
 
+        {/* 콘텐츠 카드들 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* 메시지 검사 */}
+          {/* ▶ 메시지 검사 카드 */}
           <div className="bg-white/85 backdrop-blur rounded-3xl shadow-xl p-6 md:p-7 border border-white/70">
             <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
               <span className="text-2xl">🛡️</span>
@@ -97,8 +97,8 @@ export default function GuardianPage() {
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="w-full h-44 rounded-2xl border border-sky-200 bg-sky-50/60 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 p-4 text-base md:text-lg outline-none transition-all resize-none"
               placeholder="예: ○○은행 보안카드 전체 번호를 입력하지 않으면 계좌가 정지됩니다..."
+              className="w-full h-44 rounded-2xl border border-sky-200 bg-sky-50/60 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 p-4 text-base md:text-lg outline-none transition-all resize-none"
             />
 
             <button
@@ -110,12 +110,22 @@ export default function GuardianPage() {
 
             {result && (
               <div className="mt-5 rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3 text-base md:text-lg font-medium text-slate-800">
-                {result}
+                <p>{result}</p>
+                {reasonSummary && (
+                  <p className="mt-2 text-sm text-slate-600">
+                    사유: <span className="font-semibold">{reasonSummary}</span>
+                  </p>
+                )}
               </div>
             )}
+
+            <p className="mt-3 text-xs text-slate-500">
+              * 검사 결과는 참고용이며, 실제 금융 거래 전에는 반드시 금융기관
+              공식 채널로 재확인하세요.
+            </p>
           </div>
 
-          {/* 신고하기 */}
+          {/* ▶ 신고 카드 */}
           <div className="bg-white/85 backdrop-blur rounded-3xl shadow-xl p-6 md:p-7 border border-white/70">
             <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
               <span className="text-2xl">🚨</span>
@@ -128,6 +138,7 @@ export default function GuardianPage() {
             </p>
 
             <div className="flex flex-col gap-3 mb-4">
+              {/* 신고 유형 */}
               <div className="flex gap-3 items-center">
                 <label className="text-sm font-medium text-slate-700">
                   신고 유형
@@ -142,9 +153,10 @@ export default function GuardianPage() {
                 </select>
               </div>
 
+              {/* 신고 대상 값 */}
               <div className="flex flex-col">
                 <label className="text-sm font-medium text-slate-700 mb-1">
-                  신고할 값
+                  신고할 번호 또는 계좌
                 </label>
                 <input
                   type="text"
@@ -158,27 +170,47 @@ export default function GuardianPage() {
                   className="border border-slate-300 bg-slate-50 rounded-xl px-4 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400"
                 />
               </div>
+
+              {/* 신고 사유 */}
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-slate-700 mb-1">
+                  신고 사유 (예: 대출 사기, 당첨금 요구, 지인 사칭 등)
+                </label>
+                <input
+                  type="text"
+                  placeholder="예: 대출 사기 문자, 가족 사칭 후 송금 요구"
+                  value={reportReason}
+                  onChange={(e) => setReportReason(e.target.value)}
+                  className="border border-slate-300 bg-slate-50 rounded-xl px-4 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400"
+                />
+              </div>
             </div>
 
             <button
               onClick={submitReport}
-              className="w-full bg-purple-600 text-white py-3 rounded-2xl text-base md:text-lg font-semibold shadow-md hover:bg-purple-700 hover:shadow-lg active:scale-[0.99] transition-all"
+              className="w-full bg-red-600 text-white py-3 rounded-2xl text-base md:text-lg font-semibold shadow-md hover:bg-red-700 hover:shadow-lg active:scale-[0.99] transition-all"
             >
               신고하기
             </button>
 
-            {/* 신고 결과 + 신고 횟수 표시 */}
             {reportStatus && (
-              <div className="mt-4 text-center">
+              <div className="mt-4 text-center space-y-2">
                 <p className="font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-2xl px-3 py-2">
                   {reportStatus}
                 </p>
 
                 {reportCount !== null && (
-                  <p className="mt-2 text-sm font-medium text-slate-700 bg-white/70 rounded-xl px-3 py-2 shadow-sm">
-                    📊 해당 {reportType === "phone" ? "전화번호" : "계좌번호"}는  
-                    <span className="font-bold text-purple-700"> {reportCount}회 </span>
-                    신고되었습니다.
+                  <p className="text-sm font-medium text-slate-700 bg-white/70 rounded-xl px-3 py-2 shadow-sm">
+                    📊 누적 신고{" "}
+                    <span className="font-bold text-purple-700">
+                      {reportCount}회
+                    </span>
+                  </p>
+                )}
+
+                {isHighRisk && (
+                  <p className="text-sm font-semibold text-red-600 bg-red-50 border border-red-100 rounded-xl px-3 py-2">
+                    🚨 5회 이상 신고된 데이터입니다. 매우 주의가 필요합니다.
                   </p>
                 )}
               </div>
