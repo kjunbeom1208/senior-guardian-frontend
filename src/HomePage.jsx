@@ -120,7 +120,7 @@ export default function HomePage() {
                 </div>
                 <div className="text-left">
                   <div className="text-lg md:text-xl font-bold text-slate-900">
-                    가족 연동
+                    가족 연동 (필수)
                   </div>
                   <p className="text-xs md:text-sm text-slate-600 mt-1">
                     가족이 함께 모니터링하며 금융 생활을 지켜볼 수 있어요.
