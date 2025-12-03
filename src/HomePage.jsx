@@ -25,7 +25,7 @@ export default function HomePage() {
           to="/education"
           className="bg-yellow-500 text-white text-2xl md:text-3xl font-bold py-6 rounded-2xl shadow-lg hover:bg-yellow-600 transition text-center"
         >
-          📘 금융 교육
+          📘 보호자 확인 요청
         </Link>
         <Link
           to="/family"

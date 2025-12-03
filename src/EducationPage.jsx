@@ -20,7 +20,7 @@ export default function CheckRequestPage() {
 
   return (
     <div className="min-h-screen bg-yellow-50 flex flex-col items-center justify-center">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">🔔 보호자 대신 확인 요청</h2>
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">🔔 보호자 확인 요청</h2>
 
       <textarea
         value={message}
