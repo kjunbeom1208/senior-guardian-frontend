@@ -22,12 +22,11 @@ export default function HomePage() {
           </div>
 
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight">
-            👵 시니어 금융 안전 지킴이
+            👵 시니어 안심 톡
           </h1>
           <p className="text-base md:text-lg text-slate-700 max-w-2xl mx-auto">
-            시니어가 안심하고 금융 서비스를 이용할 수 있도록
-            <br className="hidden md:block" /> 실시간 사기 감지부터 가족 연동까지
-            한 번에 제공합니다.
+            가족이 함께 지켜주는
+            <br className="hidden md:block" /> 안심 메시지 서비스
           </p>
         </div>
 
@@ -48,7 +47,7 @@ export default function HomePage() {
                     실시간 사기 필터링
                   </div>
                   <p className="text-xs md:text-sm text-slate-600 mt-1">
-                    통화·문자·앱 사용 중 위험 신호를 즉시 감지해 알려줘요.
+                    문자 사용 중 위험 신호를 즉시 감지해 알려줘요.
                   </p>
                 </div>
               </div>
@@ -98,7 +97,7 @@ export default function HomePage() {
                     보호자 확인 요청
                   </div>
                   <p className="text-xs md:text-sm text-slate-600 mt-1">
-                    큰 금액 거래 전, 보호자에게 간편하게 확인을 요청해요.
+                    보호자에게 간편하게 확인을 요청해요.
                   </p>
                 </div>
               </div>
@@ -123,7 +122,7 @@ export default function HomePage() {
                     가족 연동 (필수)
                   </div>
                   <p className="text-xs md:text-sm text-slate-600 mt-1">
-                    가족이 함께 모니터링하며 금융 생활을 지켜볼 수 있어요.
+                    가족이 함께 지켜보는 안심 네트워크로 더 안전하게
                   </p>
                 </div>
               </div>
