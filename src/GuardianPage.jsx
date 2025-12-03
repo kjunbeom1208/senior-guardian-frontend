@@ -6,6 +6,7 @@ export default function GuardianPage() {
   const [reportValue, setReportValue] = useState(""); // 신고 값
   const [reportType, setReportType] = useState("phone"); // 신고 타입
   const [reportStatus, setReportStatus] = useState(""); // 신고 상태
+  const [reportCount, setReportCount] = useState(null); // 신고 횟수 ← 추가됨
 
   // ✅ 메시지 검사 (백엔드 로직 그대로 유지)
   const checkMessage = async () => {
@@ -33,7 +34,7 @@ export default function GuardianPage() {
     }
   };
 
-  // ✅ 사용자 신고 (백엔드 로직 그대로 유지)
+  // ✅ 신고하기 기능 (신고 횟수 count 포함)
   const submitReport = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/report`, {
@@ -41,8 +42,15 @@ export default function GuardianPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: reportType, value: reportValue }),
       });
+
       const data = await res.json();
+
       setReportStatus(data.message);
+
+      // ⭐ 백엔드가 count 값을 보내준다고 가정
+      if (data.count !== undefined) {
+        setReportCount(data.count);
+      }
     } catch (err) {
       console.error(err);
       setReportStatus("❌ 신고 오류 발생");
@@ -81,15 +89,18 @@ export default function GuardianPage() {
               <span className="text-2xl">🛡️</span>
               받은 메시지 검사
             </h3>
+
             <label className="block text-sm font-medium text-slate-600 mb-2">
               의심되는 문자, 카카오톡, 메신저 내용을 그대로 입력해주세요.
             </label>
+
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="w-full h-44 rounded-2xl border border-sky-200 bg-sky-50/60 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 p-4 text-base md:text-lg outline-none transition-all resize-none"
-              placeholder="받은 의심되는 메세지를 입력하시오."
+              placeholder="예: ○○은행 보안카드 전체 번호를 입력하지 않으면 계좌가 정지됩니다..."
             />
+
             <button
               onClick={checkMessage}
               className="mt-5 w-full bg-blue-600 text-white py-3.5 rounded-2xl text-base md:text-lg font-semibold shadow-md hover:bg-blue-700 hover:shadow-lg active:scale-[0.99] transition-all"
@@ -102,14 +113,9 @@ export default function GuardianPage() {
                 {result}
               </div>
             )}
-
-            <p className="mt-3 text-xs text-slate-500">
-              * 검사 결과는 참고용이며, 실제 금융 거래 결정 전에는 반드시
-              금융기관 공식 채널로 재확인하세요.
-            </p>
           </div>
 
-          {/* 사용자 신고 */}
+          {/* 신고하기 */}
           <div className="bg-white/85 backdrop-blur rounded-3xl shadow-xl p-6 md:p-7 border border-white/70">
             <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
               <span className="text-2xl">🚨</span>
@@ -144,8 +150,8 @@ export default function GuardianPage() {
                   type="text"
                   placeholder={
                     reportType === "phone"
-                      ? "예: 01012345678"
-                      : "예: 123456789012"
+                      ? "예: 010-1234-5678"
+                      : "예: 123-456-789012"
                   }
                   value={reportValue}
                   onChange={(e) => setReportValue(e.target.value)}
@@ -161,10 +167,21 @@ export default function GuardianPage() {
               신고하기
             </button>
 
+            {/* 신고 결과 + 신고 횟수 표시 */}
             {reportStatus && (
-              <p className="mt-4 text-center text-sm md:text-base font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-2xl px-3 py-2">
-                {reportStatus}
-              </p>
+              <div className="mt-4 text-center">
+                <p className="font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-2xl px-3 py-2">
+                  {reportStatus}
+                </p>
+
+                {reportCount !== null && (
+                  <p className="mt-2 text-sm font-medium text-slate-700 bg-white/70 rounded-xl px-3 py-2 shadow-sm">
+                    📊 해당 {reportType === "phone" ? "전화번호" : "계좌번호"}는  
+                    <span className="font-bold text-purple-700"> {reportCount}회 </span>
+                    신고되었습니다.
+                  </p>
+                )}
+              </div>
             )}
 
             <p className="mt-3 text-xs text-slate-500">
