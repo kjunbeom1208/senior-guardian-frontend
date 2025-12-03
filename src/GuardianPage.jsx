@@ -189,36 +189,37 @@ export default function GuardianPage() {
               신고하기
             </button>
 
-                    {reportStatus && (
-              <div className="mt-4 text-center space-y-2">
-                <p className="font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-2xl px-3 py-2">
-                  {reportStatus}
-                </p>
+             {reportStatus && (
+  <div className="mt-4 text-center space-y-2">
+    {/* ✅ 5회 미만일 때만 일반 메시지 표시 */}
+    {!isHighRisk && (
+      <p className="font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-2xl px-3 py-2">
+        {reportStatus}
+      </p>
+    )}
 
-                {reportCount !== null && (
-                  <p className="text-sm font-medium text-slate-700 bg-white/70 rounded-xl px-3 py-2 shadow-sm">
-                    📊 누적 신고{" "}
-                    <span className="font-bold text-purple-700">
-                      {reportCount}회
-                    </span>
-                  </p>
-                )}
+    {reportCount !== null && (
+      <p className="text-sm font-medium text-slate-700 bg-white/70 rounded-xl px-3 py-2 shadow-sm">
+        📊 누적 신고{" "}
+        <span className="font-bold text-purple-700">{reportCount}회</span>
+      </p>
+    )}
 
-                {isHighRisk && (
-                  <p className="text-sm font-semibold text-red-600 bg-red-50 border border-red-100 rounded-xl px-3 py-2">
-                    🚨 5회 이상 신고되어 위험 데이터베이스에 등록되었습니다!
-                    {topReason && (
-                      <span className="block mt-1 text-slate-700">
-                        사유:{" "}
-                        <span className="font-bold text-purple-700">
-                          {topReason || "정보 없음"}
-                        </span>
-                      </span>
-                    )}
-                  </p>
-                )}
-              </div>
-            )}
+    {isHighRisk && (
+      <p className="text-sm font-semibold text-red-600 bg-red-50 border border-red-100 rounded-xl px-3 py-2">
+        🚨 5회 이상 신고되어 위험 데이터베이스에 등록되었습니다!
+        {topReason && (
+          <span className="block mt-1 text-slate-700">
+            사유:{" "}
+            <span className="font-bold text-purple-700">
+              {topReason || "정보 없음"}
+            </span>
+          </span>
+        )}
+      </p>
+    )}
+  </div>
+)}
 
             <p className="mt-3 text-xs text-slate-500">
               * 신고된 정보는 사기 의심 데이터로 활용될 수 있으며, 실제 수사는
