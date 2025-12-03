@@ -21,9 +21,9 @@ export default function HomePage() {
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight">
-            👵 시니어 안심 톡
-          </h1>
+          <h1 className="text-center md:text-left md:ml-4 text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 leading-tight">
+  👵 시니어 안심 톡
+</h1>
           <p className="text-base md:text-lg text-slate-700 max-w-2xl mx-auto">
             가족이 함께 지켜주는
             <br className="hidden md:block" /> 안심 메시지 서비스
