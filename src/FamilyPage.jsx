@@ -30,7 +30,7 @@ export default function FamilyPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           to: phone,
-          message: "🚨 가족 알림: 위험 메시지가 탐지되었습니다!",
+          message: "시니어 안심 톡에 등록되었습니다.",
         }),
       });
       const data = await res.json();
