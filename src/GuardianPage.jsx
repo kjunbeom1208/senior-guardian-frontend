@@ -9,7 +9,7 @@ export default function GuardianPage() {
   const [reportReason, setReportReason] = useState(""); // ✅ 추가됨
   const [reportStatus, setReportStatus] = useState("");
   const [reportCount, setReportCount] = useState(null);
-
+  const [topReason, setTopReason] = useState(null);
   // ✅ 메시지 검사 (백엔드 연동 그대로)
   const checkMessage = async () => {
     try {
@@ -48,6 +48,7 @@ export default function GuardianPage() {
       const data = await res.json();
       setReportStatus(data.message);
       setReportCount(data.count ?? null);
+      setTopReason(data.topReason || null);
     } catch {
       setReportStatus("❌ 신고 오류 발생");
       setReportCount(null);
