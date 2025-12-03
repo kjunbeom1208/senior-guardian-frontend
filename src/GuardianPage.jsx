@@ -98,7 +98,7 @@ export default function GuardianPage() {
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="예: ○○은행 보안카드 전체 번호를 입력하지 않으면 계좌가 정지됩니다..."
+              placeholder="받은 의심되는 메세지를 입력하시오."
               className="w-full h-44 rounded-2xl border border-sky-200 bg-sky-50/60 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 p-4 text-base md:text-lg outline-none transition-all resize-none"
             />
 
@@ -109,7 +109,7 @@ export default function GuardianPage() {
               메시지 위험도 검사하기
             </button>
 
-            {result && (
+          {/*  {result && (
               <div className="mt-5 rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3 text-base md:text-lg font-medium text-slate-800">
                 <p>{result}</p>
                 {reasonSummary && (
@@ -118,7 +118,7 @@ export default function GuardianPage() {
                   </p>
                 )}
               </div>
-            )}
+            )} */}
 
             <p className="mt-3 text-xs text-slate-500">
               * 검사 결과는 참고용이며, 실제 금융 거래 전에는 반드시 금융기관
@@ -163,8 +163,8 @@ export default function GuardianPage() {
                   type="text"
                   placeholder={
                     reportType === "phone"
-                      ? "예: 010-1234-5678"
-                      : "예: 123-456-789012"
+                      ? "예: 01012345678"
+                      : "예: 123456789012"
                   }
                   value={reportValue}
                   onChange={(e) => setReportValue(e.target.value)}
@@ -179,7 +179,7 @@ export default function GuardianPage() {
                 </label>
                 <input
                   type="text"
-                  placeholder="예: 대출 사기 문자, 가족 사칭 후 송금 요구"
+                  placeholder="예: 대출 사기 문자, 사칭 등"
                   value={reportReason}
                   onChange={(e) => setReportReason(e.target.value)}
                   className="border border-slate-300 bg-slate-50 rounded-xl px-4 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400"
