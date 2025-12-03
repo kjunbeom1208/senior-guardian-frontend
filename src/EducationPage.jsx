@@ -56,7 +56,7 @@ export default function CheckRequestPage() {
           onClick={sendRequest}
           className="mt-6 w-full bg-blue-600 text-white py-3 rounded-xl text-lg font-bold shadow-md hover:bg-blue-700 hover:shadow-lg transition-all"
         >
-          보호자에게 확인 요청 보내기
+          보호자와 함께 확인하기
         </button>
 
         {/* 응답 메시지 */}
