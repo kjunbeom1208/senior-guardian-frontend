@@ -29,11 +29,12 @@ export default function FamilyPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          to: phone, // 입력된 전화번호
+          to: phone,
           message: "🚨 가족 알림: 위험 메시지가 탐지되었습니다!",
         }),
       });
       const data = await res.json();
+
       if (data.success) {
         setStatus("✅ 문자 전송 성공!");
       } else {
@@ -46,40 +47,63 @@ export default function FamilyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-purple-100 p-8">
-      <h2 className="text-4xl font-extrabold text-purple-900 text-center mb-8">
-        👨‍👩‍👦 가족 연동 서비스
-      </h2>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-violet-100 to-purple-200 px-4 py-12 flex justify-center items-center relative overflow-hidden">
 
-      <div className="bg-white shadow-xl rounded-2xl p-8 max-w-3xl mx-auto">
+      {/* 배경 장식 */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute -top-24 left-10 h-64 w-64 bg-purple-300/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-72 w-72 bg-pink-300/40 rounded-full blur-3xl" />
+      </div>
+
+      {/* 컨테이너 */}
+      <div className="w-full max-w-3xl bg-white/80 backdrop-blur-xl shadow-xl border border-white/50 rounded-3xl p-10">
+
+        {/* 제목 */}
+        <h2 className="text-3xl md:text-4xl font-extrabold text-purple-900 text-center mb-6">
+          👨‍👩‍👦 가족 연동 서비스
+        </h2>
+        <p className="text-center text-slate-600 mb-8">
+          가족 전화번호를 등록하면 위험 상황 발생 시 즉시 알림을 받을 수 있어요.
+        </p>
+
         <form className="flex flex-col gap-6">
-          <label className="text-2xl font-bold">가족 전화번호 입력</label>
+          <label className="text-lg font-semibold text-slate-700">
+            가족 전화번호 입력
+          </label>
+
           <input
             type="text"
             placeholder="예: 01012345678"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="w-full border-4 border-purple-400 rounded-xl p-5 text-2xl focus:ring-4 focus:ring-purple-300"
+            className="w-full border border-purple-300 rounded-2xl bg-purple-50/60 focus:bg-white focus:border-purple-500 focus:ring-2 focus:ring-purple-200 p-4 text-lg outline-none transition"
             required
           />
 
-          <div className="flex gap-4">
+          {/* 버튼 그룹 */}
+          <div className="grid grid-cols-2 gap-4 mt-2">
             <button
               onClick={handleSave}
-              className="flex-1 bg-yellow-500 text-white font-bold text-2xl py-5 rounded-xl hover:bg-yellow-600 transition"
+              className="bg-yellow-500 shadow-md text-white text-lg font-bold py-4 rounded-2xl hover:bg-yellow-600 hover:shadow-lg transition-all active:scale-[0.98]"
             >
               📌 저장하기
             </button>
+
             <button
               onClick={handleSend}
-              className="flex-1 bg-purple-600 text-white font-bold text-2xl py-5 rounded-xl hover:bg-purple-700 transition"
+              className="bg-purple-600 shadow-md text-white text-lg font-bold py-4 rounded-2xl hover:bg-purple-700 hover:shadow-lg transition-all active:scale-[0.98]"
             >
               📩 문자 보내기
             </button>
           </div>
         </form>
 
-        {status && <p className="mt-6 text-xl font-bold text-center">{status}</p>}
+        {/* 상태 메시지 */}
+        {status && (
+          <p className="mt-6 text-center text-lg font-semibold bg-white/70 border border-slate-200 rounded-2xl py-3 shadow-sm text-slate-800">
+            {status}
+          </p>
+        )}
       </div>
     </div>
   );
