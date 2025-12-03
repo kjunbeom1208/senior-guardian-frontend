@@ -1,61 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function EducationPage() {
+export default function CheckRequestPage() {
+  const [message, setMessage] = useState("");
+  const [response, setResponse] = useState("");
+
+  const sendRequest = async () => {
+    try {
+      const res = await fetch("https://senior-guardian-app.onrender.com/api/request-check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+      });
+      const data = await res.json();
+      setResponse(data.message);
+    } catch (err) {
+      setResponse("❌ 요청 실패: 서버 오류");
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-yellow-100 p-8">
-      <h2 className="text-4xl font-extrabold text-yellow-900 text-center mb-8">
-        📘 금융 교육 가이드
-      </h2>
+    <div className="min-h-screen bg-yellow-50 flex flex-col items-center justify-center">
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">🔔 보호자 대신 확인 요청</h2>
 
-      <div className="grid gap-8 max-w-4xl mx-auto">
-        {/* 인터넷 뱅킹 */}
-        <div className="bg-white shadow-lg rounded-2xl p-6">
-          <h3 className="text-2xl font-bold text-blue-800 mb-4">💻 인터넷 뱅킹</h3>
-          <p className="text-xl mb-4">
-            은행 앱 또는 웹사이트에 로그인하는 방법을 단계별로 안내합니다.
-          </p>
-          <a
-            href="https://youtu.be/jV-lr5rRop0?si=UUF3B6rpWJvSWcql"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-600 text-white px-6 py-3 rounded-xl text-lg font-bold hover:bg-blue-700 transition"
-          >
-            학습하러 가기
-          </a>
-        </div>
+      <textarea
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="의심되는 메시지를 입력하세요"
+        className="w-96 h-40 p-3 border-2 border-gray-400 rounded-lg text-lg"
+      />
 
-        {/* 모바일 결제 */}
-        <div className="bg-white shadow-lg rounded-2xl p-6">
-          <h3 className="text-2xl font-bold text-green-800 mb-4">📱 모바일 결제</h3>
-          <p className="text-xl mb-4">
-            카카오페이, 네이버페이 등 간편결제 서비스를 안전하게 사용하는 방법을 설명합니다.
-          </p>
-          <a
-            href="https://www.youtube.com/watch?v=영상링크2"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-green-600 text-white px-6 py-3 rounded-xl text-lg font-bold hover:bg-green-700 transition"
-          >
-            학습하러 가기
-          </a>
-        </div>
+      <button
+        onClick={sendRequest}
+        className="mt-5 bg-blue-600 text-white px-6 py-3 rounded-xl text-lg font-bold hover:bg-blue-700 transition"
+      >
+        보호자에게 확인 요청 보내기
+      </button>
 
-        {/* ATM/키오스크 */}
-        <div className="bg-white shadow-lg rounded-2xl p-6">
-          <h3 className="text-2xl font-bold text-purple-800 mb-4">🏧 ATM/키오스크</h3>
-          <p className="text-xl mb-4">
-            현금 인출, 입금, 공과금 납부 등 ATM과 키오스크 사용법을 영상과 함께 안내합니다.
-          </p>
-          <a
-            href="https://youtu.be/209ZxvWINfE?si=Ep43eOeIjveX3gZZ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-purple-600 text-white px-6 py-3 rounded-xl text-lg font-bold hover:bg-purple-700 transition"
-          >
-            학습하러 가기
-          </a>
-        </div>
-      </div>
+      {response && <p className="mt-4 text-lg text-gray-700">{response}</p>}
     </div>
   );
 }
