@@ -2,19 +2,22 @@ import React, { useState } from "react";
 
 export default function GuardianPage() {
   const [message, setMessage] = useState(""); // 입력한 메시지
-  const [result, setResult] = useState("");   // 검사 결과
+  const [result, setResult] = useState(""); // 검사 결과
   const [reportValue, setReportValue] = useState(""); // 신고 값
   const [reportType, setReportType] = useState("phone"); // 신고 타입
-  const [reportStatus, setReportStatus] = useState("");  // 신고 상태
+  const [reportStatus, setReportStatus] = useState(""); // 신고 상태
 
-  // ✅ 메시지 검사
+  // ✅ 메시지 검사 (백엔드 로직 그대로 유지)
   const checkMessage = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/check-message`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }), // message 그대로 보냄
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/check-message`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message }),
+        }
+      );
       const data = await res.json();
 
       if (data.risk === "위험") {
@@ -30,7 +33,7 @@ export default function GuardianPage() {
     }
   };
 
-  // ✅ 사용자 신고
+  // ✅ 사용자 신고 (백엔드 로직 그대로 유지)
   const submitReport = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/report`, {
@@ -47,55 +50,129 @@ export default function GuardianPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h2 className="text-4xl font-bold text-blue-900 text-center mb-8">
-        📡 실시간 사기 필터링
-      </h2>
-
-      {/* 메시지 검사 */}
-      <div className="bg-white rounded-2xl shadow-xl p-6 max-w-3xl mx-auto mb-10">
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className="w-full h-40 border-4 border-blue-500 rounded-xl p-4 text-2xl"
-          placeholder="받은 메시지를 입력하세요..."
-        />
-        <button
-          onClick={checkMessage}
-          className="mt-6 w-full bg-red-600 text-white py-5 rounded-xl"
-        >
-          검사하기
-        </button>
-        {result && <div className="mt-6 text-2xl">{result}</div>}
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-sky-100 to-indigo-100 px-4 py-10 flex items-center justify-center relative overflow-hidden">
+      {/* 배경 장식 */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-24 -left-16 h-64 w-64 bg-sky-300/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 bg-indigo-300/30 rounded-full blur-3xl" />
       </div>
 
-      {/* 사용자 신고 */}
-      <div className="bg-white rounded-2xl shadow-xl p-6 max-w-3xl mx-auto">
-        <h3 className="text-2xl font-bold mb-4">🚨 사기 번호/URL 신고하기</h3>
-        <select
-          value={reportType}
-          onChange={(e) => setReportType(e.target.value)}
-          className="border-2 p-3 rounded-lg mr-3"
-        >
-          <option value="phone">전화번호</option>
-          <option value="account">계좌번호</option>
-        </select>
-        <input
-          type="text"
-          placeholder="신고할 값을 입력하세요"
-          value={reportValue}
-          onChange={(e) => setReportValue(e.target.value)}
-          className="border-2 p-3 rounded-lg w-2/3"
-        />
-        <button
-          onClick={submitReport}
-          className="ml-3 bg-purple-600 text-white px-6 py-3 rounded-lg"
-        >
-          신고하기
-        </button>
-        {reportStatus && (
-          <p className="mt-4 text-green-600 font-bold">{reportStatus}</p>
-        )}
+      <div className="w-full max-w-5xl">
+        {/* 상단 타이틀 */}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-white/80 shadow-sm mb-4">
+            <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-xs font-semibold text-slate-700">
+              실시간으로 위험 메시지를 분석하고 신고까지 도와드립니다.
+            </span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-blue-900 mb-2">
+            📡 실시간 사기 필터링
+          </h2>
+          <p className="text-slate-600 text-sm md:text-base">
+            문자·메신저로 받은 내용을 붙여넣어 사기 위험도를 확인해 보세요.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* 메시지 검사 */}
+          <div className="bg-white/85 backdrop-blur rounded-3xl shadow-xl p-6 md:p-7 border border-white/70">
+            <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <span className="text-2xl">🛡️</span>
+              받은 메시지 검사
+            </h3>
+            <label className="block text-sm font-medium text-slate-600 mb-2">
+              의심되는 문자, 카카오톡, 메신저 내용을 그대로 입력해주세요.
+            </label>
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="w-full h-44 rounded-2xl border border-sky-200 bg-sky-50/60 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 p-4 text-base md:text-lg outline-none transition-all resize-none"
+              placeholder="예: ○○은행 보안카드 전체 번호를 입력하지 않으면 계좌가 정지됩니다..."
+            />
+            <button
+              onClick={checkMessage}
+              className="mt-5 w-full bg-blue-600 text-white py-3.5 rounded-2xl text-base md:text-lg font-semibold shadow-md hover:bg-blue-700 hover:shadow-lg active:scale-[0.99] transition-all"
+            >
+              메시지 위험도 검사하기
+            </button>
+
+            {result && (
+              <div className="mt-5 rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3 text-base md:text-lg font-medium text-slate-800">
+                {result}
+              </div>
+            )}
+
+            <p className="mt-3 text-xs text-slate-500">
+              * 검사 결과는 참고용이며, 실제 금융 거래 결정 전에는 반드시
+              금융기관 공식 채널로 재확인하세요.
+            </p>
+          </div>
+
+          {/* 사용자 신고 */}
+          <div className="bg-white/85 backdrop-blur rounded-3xl shadow-xl p-6 md:p-7 border border-white/70">
+            <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <span className="text-2xl">🚨</span>
+              사기 번호 / 계좌 신고하기
+            </h3>
+
+            <p className="text-sm text-slate-600 mb-4">
+              이미 사기로 의심되는 전화번호나 계좌번호가 있다면 신고해 주세요.
+              다른 이용자들의 안전에도 큰 도움이 됩니다.
+            </p>
+
+            <div className="flex flex-col gap-3 mb-4">
+              <div className="flex gap-3 items-center">
+                <label className="text-sm font-medium text-slate-700">
+                  신고 유형
+                </label>
+                <select
+                  value={reportType}
+                  onChange={(e) => setReportType(e.target.value)}
+                  className="border border-slate-300 bg-slate-50 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400"
+                >
+                  <option value="phone">전화번호</option>
+                  <option value="account">계좌번호</option>
+                </select>
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-sm font-medium text-slate-700 mb-1">
+                  신고할 값
+                </label>
+                <input
+                  type="text"
+                  placeholder={
+                    reportType === "phone"
+                      ? "예: 010-1234-5678"
+                      : "예: 123-456-789012"
+                  }
+                  value={reportValue}
+                  onChange={(e) => setReportValue(e.target.value)}
+                  className="border border-slate-300 bg-slate-50 rounded-xl px-4 py-2.5 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-400"
+                />
+              </div>
+            </div>
+
+            <button
+              onClick={submitReport}
+              className="w-full bg-purple-600 text-white py-3 rounded-2xl text-base md:text-lg font-semibold shadow-md hover:bg-purple-700 hover:shadow-lg active:scale-[0.99] transition-all"
+            >
+              신고하기
+            </button>
+
+            {reportStatus && (
+              <p className="mt-4 text-center text-sm md:text-base font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-2xl px-3 py-2">
+                {reportStatus}
+              </p>
+            )}
+
+            <p className="mt-3 text-xs text-slate-500">
+              * 신고된 정보는 사기 의심 데이터로 활용될 수 있으며, 실제 수사는
+              경찰청 및 관계 기관의 권한입니다.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

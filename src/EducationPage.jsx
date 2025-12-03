@@ -39,7 +39,7 @@ export default function CheckRequestPage() {
             🔔 보호자 확인 요청
           </h2>
           <p className="text-gray-600 text-sm">
-            의심되는 메시지를 입력하면 보호자에게 즉시 전달됩니다.
+            받은 의심되는 메세지를 입력하시오.
           </p>
         </div>
 
