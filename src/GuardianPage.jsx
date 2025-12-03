@@ -112,11 +112,6 @@ export default function GuardianPage() {
             {result && (
               <div className="mt-5 rounded-2xl bg-slate-50 border border-slate-200 px-4 py-3 text-base md:text-lg font-medium text-slate-800">
                 <p>{result}</p>
-                {reasonSummary && (
-                  <p className="mt-2 text-sm text-slate-600">
-                    사유: <span className="font-semibold">{reasonSummary}</span>
-                  </p>
-                )}
               </div>
             )}
 
