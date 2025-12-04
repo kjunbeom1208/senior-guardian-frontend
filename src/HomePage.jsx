@@ -69,10 +69,10 @@ export default function HomePage() {
                 </div>
                 <div className="text-left">
                   <div className="text-lg md:text-xl font-bold text-slate-900">
-                    가상 시뮬레이션
+                    금융안전 카드뉴스
                   </div>
                   <p className="text-xs md:text-sm text-slate-600 mt-1">
-                    실제 사기 패턴을 기반으로 연습하며 대응력을 키워요.
+                    실제 사례를 바탕으로 한 금융사기 예방 카드뉴스에요.
                   </p>
                 </div>
               </div>
