@@ -37,7 +37,7 @@ const CARD_NEWS = [
     },
     preview:
       "자녀를 사칭해 급하게 결제·개인정보를 요구하는 메신저 피싱, 어떻게 막을까요?",
-    image: null,
+    image: "/images/card2.png",
     modalTitle:
       '😨 "엄마, 나 폰 고장났어..." 혹시 이 문자 받으셨나요? 클릭 금지!',
     body: [
@@ -63,7 +63,7 @@ const CARD_NEWS = [
     },
     preview:
       '“서울지검 검사입니다. 당신 통장이 대포통장으로…” 이 전화, 진짜일까요?',
-    image: null,
+    image: "/images/card3.png",
     modalTitle:
       '👮‍♂️ "서울지검 검사입니다. 당신 통장이 대포통장으로..." 이 전화, 진짜일까요?',
     body: [
@@ -89,7 +89,7 @@ const CARD_NEWS = [
     },
     preview:
       '“정부 지원 특별 대출 대상자입니다” 문자, 정말 나를 위한 혜택일까요?',
-    image: null,
+    image: "/images/card4.png",
     modalTitle:
       '💸 "정부 지원 특별 대출 대상자?" 이 문자, 절대 믿지 마세요!',
     body: [
@@ -114,7 +114,7 @@ const CARD_NEWS = [
     },
     preview:
       '“30만 원 드릴게요, 신분증만 빌려주세요” 단 한 번의 선택이 평생 빚이 될 수 있습니다.',
-    image: null,
+    image: "/images/card5.png",
     modalTitle:
       '💸 "30만원 드릴게, 신분증만..." 이 말 믿었다간 패가망신합니다!',
     body: [
