@@ -69,7 +69,7 @@ export default function HomePage() {
                 </div>
                 <div className="text-left">
                   <div className="text-lg md:text-xl font-bold text-slate-900">
-                    금융안전 카드뉴스
+                    금융안전 카드뉴스 및 예방교육
                   </div>
                   <p className="text-xs md:text-sm text-slate-600 mt-1">
                     실제 사례를 바탕으로 한 금융사기 예방 카드뉴스에요.
