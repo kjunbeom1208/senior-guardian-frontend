@@ -10,6 +10,8 @@ export default function GuardianPage() {
   const [reportStatus, setReportStatus] = useState("");
   const [reportCount, setReportCount] = useState(null);
   const [topReason, setTopReason] = useState(null);
+  const [recentReports, setRecentReports] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   // ✅ 메시지 검사 (백엔드 연동 그대로)
   const checkMessage = async () => {
     try {
@@ -33,7 +35,27 @@ export default function GuardianPage() {
   };
 
   // ✅ 신고 (백엔드 연동 그대로)
+// ✅ [수정] 중복 방지 로직이 추가된 신고 함수
   const submitReport = async () => {
+    // 1. 빈 값 체크
+    if (!reportValue.trim()) {
+      alert("신고할 번호나 계좌를 입력해주세요.");
+      return;
+    }
+
+    // 2. 방금 신고한 내용인지 체크 (여기서 막습니다!)
+    const isDuplicate = recentReports.some(
+      (item) => item.type === reportType && item.value === reportValue
+    );
+
+    if (isDuplicate) {
+      alert("방금 신고하신 내용입니다. (중복 신고 방지)");
+      return; 
+    }
+
+    // 3. 로딩 시작
+    setIsSubmitting(true);
+
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/report`, {
         method: "POST",
@@ -49,9 +71,19 @@ export default function GuardianPage() {
       setReportStatus(data.message);
       setReportCount(data.count ?? null);
       setTopReason(data.topReason || null);
+
+      // 4. 성공 시 목록에 추가 (이제 이 번호는 중복 처리됨)
+      setRecentReports((prev) => [...prev, { type: reportType, value: reportValue }]);
+      
+      // 입력창 비우기
+      setReportValue("");
+      setReportReason("");
+
     } catch {
       setReportStatus("❌ 신고 오류 발생");
       setReportCount(null);
+    } finally {
+      setIsSubmitting(false); // 로딩 끝
     }
   };
 
