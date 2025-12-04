@@ -186,9 +186,9 @@ export default function SimulationPage() {
               <button
                 onClick={() => navigate("/cardnews/deepfake")}
                 className={`inline-block text-white px-6 py-3 rounded-2xl text-base md:text-lg font-semibold shadow ${card.color.button} transition`}
-  >
-  카드뉴스 보기
-</button>
+              >
+                카드뉴스 보기
+              </button>
             </div>
           ))}
         </div>
