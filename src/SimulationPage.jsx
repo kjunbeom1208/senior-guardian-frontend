@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const CARD_NEWS = [
   {
     id: 1,
@@ -132,7 +132,7 @@ const CARD_NEWS = [
 
 export default function SimulationPage() {
   const [activeIndex, setActiveIndex] = useState(null);
-
+  const navigate = useNavigate();
   const activeCard =
     activeIndex !== null ? CARD_NEWS[activeIndex] : null;
 
@@ -184,8 +184,8 @@ export default function SimulationPage() {
                 {card.preview}
               </p>
               <button
-                onClick={() => setActiveIndex(idx)}
-                className={`inline-block text-white px-6 py-3 rounded-2xl text-base md:text-lg font-semibold shadow ${card.color.button} transition`}
+                onClick={() => navigate(`/cardnews/${card.id === 1 ? "deepfake" : ""}`)}
+            className={`inline-block text-white px-6 py-3 rounded-2xl text-base md:text-lg font-semibold shadow ${card.color.button} transition`}
               >
                 카드뉴스 보기
               </button>

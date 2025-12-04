@@ -1,37 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { App as CapacitorApp } from "@capacitor/app";
 
-function App() {
+// 페이지 불러오기
+import SimulationPage from "./SimulationPage";
+import DeepfakeCardNewsPage from "./DeepfakeCardNewsPage";
+
+// ✅ 홈 화면 (메시지 검사 페이지)
+function HomePage() {
   const [input, setInput] = useState("");
   const [result, setResult] = useState(null);
   const navigate = useNavigate();
 
-const checkMessage = async () => {
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/check-message`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: input }),
-  });
-  const data = await res.json();
-  setResult(data);
-};
+  const checkMessage = async () => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/check-message`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: input }),
+    });
+    const data = await res.json();
+    setResult(data);
+  };
 
   // ✅ 안드로이드 뒤로가기 버튼 처리
   useEffect(() => {
     const backHandler = CapacitorApp.addListener("backButton", () => {
       if (window.location.pathname !== "/") {
-        // 홈이 아니면 → 홈으로 이동
         navigate("/");
       } else {
-        // 홈이면 → 앱 종료
         CapacitorApp.exitApp();
       }
     });
-
-    return () => {
-      backHandler.remove();
-    };
+    return () => backHandler.remove();
   }, [navigate]);
 
   return (
@@ -68,8 +68,27 @@ const checkMessage = async () => {
           결과: {result.risk}
         </div>
       )}
+
+      {/* 시뮬레이션 페이지 이동 버튼 */}
+      <button
+        onClick={() => navigate("/simulation")}
+        className="mt-6 px-6 py-3 bg-green-600 text-white rounded-lg text-lg font-semibold hover:bg-green-700"
+      >
+        🎥 카드뉴스 보기
+      </button>
     </div>
   );
 }
 
-export default App;
+// ✅ 라우터 설정
+export default function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/simulation" element={<SimulationPage />} />
+        <Route path="/cardnews/deepfake" element={<DeepfakeCardNewsPage />} />
+      </Routes>
+    </Router>
+  );
+}
