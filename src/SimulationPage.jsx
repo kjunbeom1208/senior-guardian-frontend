@@ -186,7 +186,7 @@ export default function SimulationPage() {
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-extrabold text-green-900 mb-2">
-            🎥 금융안전 카드뉴스
+            🎥 금융안전 카드뉴스 및 예방교육
           </h2>
           <p className="text-slate-600 text-sm md:text-base">
             시니어와 보호자가 함께 여러 상황을 카드뉴스와 영상으로 보고,
@@ -198,7 +198,7 @@ export default function SimulationPage() {
         {/* 🔥 유튜브 영상 3칸 섹션 추가 */}
         <div className="mb-10">
           <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4">
-            🎬 영상으로 먼저 연습해 보세요
+            🎬 금융안전 교육 동영상
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {VIDEOS.map((video) => (
@@ -229,7 +229,9 @@ export default function SimulationPage() {
             ))}
           </div>
         </div>
-
+        <h3 className="text-lg md:text-xl font-bold text-slate-900 mt-12 mb-4">
+          📚 카드뉴스 보기
+        </h3>
         {/* 카드뉴스 목록 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {CARD_NEWS.map((card, idx) => (
