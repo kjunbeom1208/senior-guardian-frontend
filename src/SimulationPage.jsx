@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const CARD_NEWS = [
   {
     id: 1,
@@ -11,8 +12,8 @@ const CARD_NEWS = [
       badge: "bg-red-100 text-red-700",
     },
     preview:
-      '“엄마, 나야… 급한데 돈 좀…” 영상통화 속 가족, 진짜일까요? AI 딥페이크 사기 사례를 알아봅니다.',
-    image: "/images/card1.png", // 🔁 딥페이크 이미지 경로로 교체해서 사용
+      "“엄마, 나야… 급한데 돈 좀…” 영상통화 속 가족, 진짜일까요? AI 딥페이크 사기 사례를 알아봅니다.",
+    image: "/images/card1.png",
     modalTitle:
       '😨 "엄마, 나야! 급한데 돈 좀..." 영상통화 속 아들, 진짜일까요?',
     body: [
@@ -29,7 +30,7 @@ const CARD_NEWS = [
   {
     id: 2,
     badge: "카드뉴스 2",
-    shortTitle: '“엄마, 나 폰 고장났어…” 문자 피싱',
+    shortTitle: "“엄마, 나 폰 고장났어…” 문자 피싱",
     color: {
       title: "text-blue-700",
       button: "bg-blue-600 hover:bg-blue-700",
@@ -88,7 +89,7 @@ const CARD_NEWS = [
       badge: "bg-emerald-100 text-emerald-700",
     },
     preview:
-      '“정부 지원 특별 대출 대상자입니다” 문자, 정말 나를 위한 혜택일까요?',
+      "“정부 지원 특별 대출 대상자입니다” 문자, 정말 나를 위한 혜택일까요?",
     image: "/images/card4.png",
     modalTitle:
       '💸 "정부 지원 특별 대출 대상자?" 이 문자, 절대 믿지 마세요!',
@@ -113,7 +114,7 @@ const CARD_NEWS = [
       badge: "bg-amber-100 text-amber-700",
     },
     preview:
-      '“30만 원 드릴게요, 신분증만 빌려주세요” 단 한 번의 선택이 평생 빚이 될 수 있습니다.',
+      "“30만 원 드릴게요, 신분증만 빌려주세요” 단 한 번의 선택이 평생 빚이 될 수 있습니다.",
     image: "/images/card5.png",
     modalTitle:
       '💸 "30만원 드릴게, 신분증만..." 이 말 믿었다간 패가망신합니다!',
@@ -130,9 +131,40 @@ const CARD_NEWS = [
   },
 ];
 
+// 🔥 유튜브 영상 3개 추가 (기존 카드뉴스 로직에는 영향 없음)
+const VIDEOS = [
+  {
+    id: 1,
+    title: "AI 딥페이크 영상통화 사기 시뮬레이션",
+    desc: "얼굴과 목소리를 똑같이 흉내 내는 영상통화 사기 시나리오를 영상으로 확인해 보세요.",
+    url: "https://www.youtube.com/watch?v=xxxxxxx",
+    badge: "영상 1",
+    color: "bg-red-100 text-red-700",
+    button: "bg-red-600 hover:bg-red-700",
+  },
+  {
+    id: 2,
+    title: "자녀 사칭 메신저 피싱 대응 방법",
+    desc: "“엄마, 나 폰 고장났어…” 문자에 어떻게 대응해야 하는지 실제 예시로 보여줍니다.",
+    url: "https://www.youtube.com/watch?v=yyyyyyy",
+    badge: "영상 2",
+    color: "bg-blue-100 text-blue-700",
+    button: "bg-blue-600 hover:bg-blue-700",
+  },
+  {
+    id: 3,
+    title: "검사·경찰 사칭 보이스피싱 실제 통화 예시",
+    desc: "수사기관을 사칭하는 전화를 어떻게 구별하고 끊어야 하는지 통화 예시로 배워보세요.",
+    url: "https://www.youtube.com/watch?v=zzzzzzz",
+    badge: "영상 3",
+    color: "bg-purple-100 text-purple-700",
+    button: "bg-purple-600 hover:bg-purple-700",
+  },
+];
+
 export default function SimulationPage() {
   const [activeIndex, setActiveIndex] = useState(null);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // 그대로 둠 (기존 로직 건드리지 않기)
   const activeCard =
     activeIndex !== null ? CARD_NEWS[activeIndex] : null;
 
@@ -157,10 +189,45 @@ export default function SimulationPage() {
             🎥 금융안전 카드뉴스
           </h2>
           <p className="text-slate-600 text-sm md:text-base">
-            시니어와 보호자가 함께 여러 상황을 카드뉴스로 보고,
+            시니어와 보호자가 함께 여러 상황을 카드뉴스와 영상으로 보고,
             <br className="hidden md:block" />
             실제 사기 상황에서 더 침착하게 대응할 수 있도록 돕습니다.
           </p>
+        </div>
+
+        {/* 🔥 유튜브 영상 3칸 섹션 추가 */}
+        <div className="mb-10">
+          <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4">
+            🎬 영상으로 먼저 연습해 보세요
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {VIDEOS.map((video) => (
+              <div
+                key={video.id}
+                className="bg-white/85 backdrop-blur rounded-2xl shadow-md p-4 flex flex-col h-full"
+              >
+                <span
+                  className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold mb-2 ${video.color}`}
+                >
+                  {video.badge}
+                </span>
+                <h4 className="text-base md:text-lg font-semibold text-slate-900 mb-2">
+                  {video.title}
+                </h4>
+                <p className="text-xs md:text-sm text-slate-600 mb-4 flex-1">
+                  {video.desc}
+                </p>
+                <a
+                  href={video.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`mt-auto inline-flex justify-center items-center text-white px-3 py-2 rounded-xl text-xs md:text-sm font-semibold shadow ${video.button} transition`}
+                >
+                  유튜브에서 보기 ▶
+                </a>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* 카드뉴스 목록 */}
