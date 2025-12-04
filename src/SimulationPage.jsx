@@ -211,7 +211,7 @@ export default function SimulationPage() {
                 <img
                   src={activeCard.image}
                   alt={activeCard.shortTitle}
-                  className="w-full h-52 md:h-64 object-cover"
+                  className="w-full h-auto rounded-2xl"
                 />
               </div>
             )}
