@@ -197,7 +197,7 @@ export default function SimulationPage() {
       {/* 카드뉴스 모달 */}
       {activeCard && (
         <div className="fixed inset-0 z-30 flex items-center justify-center bg-black/40 px-4">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full relative p-6 md:p-8">
+          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full relative p-6 md:p-8 max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setActiveIndex(null)}
               className="absolute top-3 right-3 text-slate-500 hover:text-slate-700 text-xl"
