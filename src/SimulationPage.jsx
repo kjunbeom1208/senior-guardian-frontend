@@ -154,7 +154,7 @@ export default function SimulationPage() {
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-extrabold text-green-900 mb-2">
-            🎥 가상 금융 사기 시뮬레이션
+            🎥 금융안전 카드뉴스
           </h2>
           <p className="text-slate-600 text-sm md:text-base">
             시니어와 보호자가 함께 여러 상황을 카드뉴스로 보고,
