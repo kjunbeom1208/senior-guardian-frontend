@@ -12,7 +12,7 @@ const CARD_NEWS = [
     },
     preview:
       '“엄마, 나야… 급한데 돈 좀…” 영상통화 속 가족, 진짜일까요? AI 딥페이크 사기 사례를 알아봅니다.',
-    image: "/images/deepfake-card1.jpg", // 🔁 딥페이크 이미지 경로로 교체해서 사용
+    image: "/images/card1.png", // 🔁 딥페이크 이미지 경로로 교체해서 사용
     modalTitle:
       '😨 "엄마, 나야! 급한데 돈 좀..." 영상통화 속 아들, 진짜일까요?',
     body: [

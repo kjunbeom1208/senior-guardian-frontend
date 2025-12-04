@@ -4,7 +4,7 @@ export default function DeepfakeCardNewsPage() {
   const [open, setOpen] = useState(false);
 
   // 🔥 업로드한 이미지 사용
-  const imageSrc = "/images/card1.jpg"; 
+  const imageSrc = "/images/card1.png"; 
   // 실제 적용 시: public/images/ 폴더에 넣고 위처럼 경로 작성
   // 지금 테스트라면: "/mnt/data/0.png" 로도 OK
 
